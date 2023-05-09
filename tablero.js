@@ -121,6 +121,7 @@ function ajedrez(tablero, fichas) {
     }
 
     impresora(tablero)
+    return tablero;
     // let continuar=await leeLinea("Desea reiniciar?(Si-NO):");
     // if(continuar=="Si"||continuar=="si"||continuar=="SI"){
     //          console.log("Reiniciando");
@@ -133,19 +134,30 @@ function ajedrez(tablero, fichas) {
 
 }
 ajedrez(tablero, fichas);
-function comeFicha(fichas, posicion) {
-    if (fichas[posicion] !== "C") {
-        console.log("Cojo la ficha" + fichas[posicion])
-        if(fichas[posicion]=="K"){
-            // for para ir hacia arriba
-            for (let i = 0; i < 1; i++) {
+function comeFicha(tablero) {
+    for (let i = 0; i < tablero.length; i++) {
+        for (const ficha of tablero[i]) {
+            if (ficha === "P") {
                 
+                console.log("Cojo la ficha", ficha);
                 
+                let posicion=tablero[i].findIndex(elemento=>elemento==="P")
+                console.log(posicion)
+
             }
+
         }
-    }else{
-        // return comeCaballo()
+
+
     }
+}
+comeFicha(tablero);
+function derechaIzquierda(x,y,suma) {
+let nueva_x=x+suma;
     
+    while(nueva_x>=0 && nueva_x<8){
+        tabla[nueva_x][y]=tablero[x][y];
+        nueva_x+=suma;
+    }
 
 }
