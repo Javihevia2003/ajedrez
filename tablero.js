@@ -1,30 +1,25 @@
-"use strict"
+"use strict";
 const readline = require("readline");
-const rl = readline.createInterface(
-    process.stdin,
-    process.stdout
-);
+const rl = readline.createInterface(process.stdin, process.stdout);
 
 function leeLinea(texto) {
-    return new Promise((resolve) => {
-        rl.question(texto, (introducido) => {
-            resolve(introducido);
-        });
+  return new Promise((resolve) => {
+    rl.question(texto, (introducido) => {
+      resolve(introducido);
     });
+  });
 }
-let tablero = []
+let tablero = [];
 
 for (let a1 = 0; a1 < 8; a1++) {
-    tablero[a1] = []
-    for (let a2 = 0; a2 < 8; a2++) {
-        tablero[a1][a2] = null
-
-    }
-
+  tablero[a1] = [];
+  for (let a2 = 0; a2 < 8; a2++) {
+    tablero[a1][a2] = null;
+  }
 }
 /**
  * Recibe un tablero y la imprime bonita
- * @param {} tablero 
+ * @param {} tablero
  */
 // function impresora(tablero) {
 //     for (let i = 0; i < tablero.length; i++) {
@@ -43,25 +38,19 @@ for (let a1 = 0; a1 < 8; a1++) {
 //     }
 
 // }
-// terminal dos coordenadas x e y, si esta dentro del tablero 
+// terminal dos coordenadas x e y, si esta dentro del tablero
 function impresora(tablero) {
-    for (let i = 0; i < tablero.length; i++) {
-        let linea = "|"
-        for (let j = 0; j < tablero[i].length; j++) {
-            if (tablero[i][j] == null) {
-                linea += " |";
-            } else {
-
-                linea += tablero[i][j] + "|"
-
-
-            }
-
-        }
-        console.log(linea)
-
+  for (let i = 0; i < tablero.length; i++) {
+    let linea = "|";
+    for (let j = 0; j < tablero[i].length; j++) {
+      if (tablero[i][j] == null) {
+        linea += " |";
+      } else {
+        linea += tablero[i][j] + "|";
+      }
     }
-
+    console.log(linea);
+  }
 }
 /**
  * Tres en raya
@@ -102,62 +91,65 @@ function impresora(tablero) {
 // peon = "P";
 // caballo = "C";
 
-let fichas = ["K", "Q", "A", "T", "P", "C"]
+let fichas = ["K", "Q", "A", "T", "P", "C"];
 function ajedrez(tablero, fichas) {
-    for (let i = 0; i < fichas.length; i++) {
-        let ficha = fichas[i];
-        let min = Math.ceil(0);
-        let max = Math.floor(7);
-        let cordX = Math.floor(Math.random() * (max - min + 1) + min);
-        let cordY = Math.floor(Math.random() * (max - min + 1) + min);
-        console.log(ficha, cordX)
-        console.log(ficha, cordY)
-        if ((tablero[cordX][cordY] === null)) {
-            tablero[cordX][cordY] = ficha;
-        } else {
-            console.log("Esa coordenada esta ocupada, pon otra");
-            i--;
-        }
+  for (let i = 0; i < fichas.length; i++) {
+    let ficha = fichas[i];
+    let min = Math.ceil(0);
+    let max = Math.floor(7);
+    let cordX = Math.floor(Math.random() * (max - min + 1) + min);
+    let cordY = Math.floor(Math.random() * (max - min + 1) + min);
+    console.log(ficha, cordX);
+    console.log(ficha, cordY);
+    if (tablero[cordX][cordY] === null) {
+      tablero[cordX][cordY] = ficha;
+    } else {
+      console.log("Esa coordenada esta ocupada, pon otra");
+      i--;
     }
+  }
 
-    impresora(tablero)
-    return tablero;
-    // let continuar=await leeLinea("Desea reiniciar?(Si-NO):");
-    // if(continuar=="Si"||continuar=="si"||continuar=="SI"){
-    //          console.log("Reiniciando");
-    //         return ajedrez(tablero,fichas);
-    //     }else{
-    //         console.log("Terminando");
-    //         process.exit();
+  impresora(tablero);
+  return tablero;
+  // let continuar=await leeLinea("Desea reiniciar?(Si-NO):");
+  // if(continuar=="Si"||continuar=="si"||continuar=="SI"){
+  //          console.log("Reiniciando");
+  //         return ajedrez(tablero,fichas);
+  //     }else{
+  //         console.log("Terminando");
+  //         process.exit();
 
-    //     }
-
+  //     }
 }
 ajedrez(tablero, fichas);
-function comeFicha(tablero) {
-    for (let i = 0; i < tablero.length; i++) {
-        for (const ficha of tablero[i]) {
-            if (ficha === "P") {
-                
-                console.log("Cojo la ficha", ficha);
-                
-                let posicion=tablero[i].findIndex(elemento=>elemento==="P")
-                console.log(posicion)
-
-            }
-
+function encuentraFicha(tablero) {
+  for (let fila = 0; fila < tablero.length; fila++) {
+    for (let columna = 0; columna < tablero[fila].length; columna++) {
+      if (tablero[fila][columna]=== "P") {
+        console.log("Cojo la ficha", tablero[fila][columna]);
+        let dato={ficha:tablero[fila][columna],fila,columna}
+        return dato;
+        // let posicion=tablero[i].findIndex(elemento=>elemento==="P")
+        // console.log(posicion)
+      }
+    }
+  }
+}
+console.log(encuentraFicha(tablero));
+function moverFicha(dato,tablero) {
+    switch(dato.tipo){
+        case "P":// mueve hacia arriba y solo 1 posicion
+        if (dato.fila > 0) {
+          dato.fila--;
+          for(let hayficha of tablero[dato.fila][dato.columna])
+          if(hayFicha==null){
+            console.log("No he comido ninguna ficha");
+          }else{
+            console.log("He comido la ficha",hayficha);
+          }
         }
-
-
+        break;
+        // case ""
     }
 }
-comeFicha(tablero);
-function derechaIzquierda(x,y,suma) {
-let nueva_x=x+suma;
-    
-    while(nueva_x>=0 && nueva_x<8){
-        tabla[nueva_x][y]=tablero[x][y];
-        nueva_x+=suma;
-    }
-
-}
+console.log(moverFicha(encuentraFicha(tablero)));
